@@ -11,29 +11,25 @@
 
 (() => {
     // your code here
-    function addingHero(){
-        let adding = {
-            method: 'POST',
-            data:{
-                nom: document.getElementById("hero-name").value,
-                alterEgo: document.getElementById("hero-alter-ego").value,
-                abilities: document.getElementById("hero-powers").value,
+    document.getElementById("run").addEventListener("click", async function(e){
+        e.preventDefault()
+        let nouveau = await fetch("http://localhost:3000/heroes", {
+            credentials: "omit",
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
             },
-            credentials: 'include',
-            headers: {}
-        };
+            body: JSON.stringify({
+                name: document.getElementById("hero-name").value,
+                alterEgo: document.getElementById("hero-alter-ego").value,
+                abilities: document.getElementById("hero-powers").value.split(",")
+            })
+        });
 
-        fetch('http://localhost:3000/heroes')
-        .then(response => response.json)
-        .then(data => {
-            console.log(data)
-        })
-        .catch(error =>{
-            console.error(error)
-        })
-    };
-
-    document.getElementById("run").addEventListener("click", () =>{
-        addingHero();
+        console.log(nouveau);
+        return false;
+        
     })
+    /* code fini lors d'une journée de consolidation le 27/06/19 */
 })();
